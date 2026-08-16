@@ -22,9 +22,3 @@ npm install
 # configure env vars (AI key, Telegram bot token)
 npm run dev
 ```
-
----
-
-# 🇧🇷 Português
-
-Portfólio pessoal — "AI Creative Builder": assistente de IA no próprio site, vitrine de projetos e formulário de contato com integração via Telegram. Demo: https://my-project-zeta-six-16.vercel.app
