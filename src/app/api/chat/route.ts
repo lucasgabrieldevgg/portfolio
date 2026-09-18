@@ -166,7 +166,22 @@ async function callPollinations(messages: unknown[]): Promise<string> {
   }
 }
 
+/* 🚦 Limite diário de IA (generoso) — mantém o site grátis no ar */
+const LIMITE_DIA = 30;
+const _HITS = new Map();
+function limiteEstourado(req: Request): boolean {
+  const hoje = new Date().toISOString().slice(0, 10);
+  for (const k of [..._HITS.keys()]) if (!k.startsWith(hoje)) _HITS.delete(k);
+  const ip = String(req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || "anon";
+  const k = hoje + ":" + ip;
+  const n = _HITS.get(k) || 0;
+  if (n >= LIMITE_DIA) return true;
+  _HITS.set(k, n + 1);
+  return false;
+}
+
 export async function POST(req: NextRequest) {
+  if (limiteEstourado(req)) return NextResponse.json({ erro: "Você bateu o limite diário de IA (30 mensagens/dia) — volta amanhã! 💙" }, { status: 429 });
   try {
     const body = (await req.json()) as ChatRequestBody;
     const userMessages = Array.isArray(body?.messages) ? body.messages : [];
