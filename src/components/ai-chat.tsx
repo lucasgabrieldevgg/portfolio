@@ -460,6 +460,7 @@ export function AIChat() {
               )}
             </Button>
           </div>
+          <p className="mt-2 text-center text-[11px] text-zinc-500">IA grátis — limite de 30 mensagens por dia 💜</p>
           <p className="mt-2 text-center text-[10px] text-zinc-600">
             Powered by Pollinations AI • Encerra automaticamente em 10 min
           </p>
